@@ -2,7 +2,7 @@ class Creature:
     def __init__(self, name, gender):
         self._name = name
         self._gender = gender
-        self._age = 0
+        self._age = -1
         self._health = 10
         self._hunger = 10
         self._cleanliness = 10
@@ -42,6 +42,7 @@ class Creature:
     def age_up(self):
         self._age += 1
         self.age_message()
+        self.old_age()
 
     def age_message(self):
         print(f"{self._name} is {self._age} days old!")
@@ -50,6 +51,10 @@ class Creature:
         if self._age == 10:
             self._alive = False
             print(f"{self._name} has died of old age! RIP.")
+
+    
+    def is_alive(self):
+        return self._alive
 
     def feed(self):
         if self._hunger <= 7:
@@ -82,6 +87,7 @@ class Creature:
     
     def bath(self):
         self._cleanliness = 10
+        print(f"{self._name} is nice and clean!")
 
     def cleanliness_message(self):
         if self._cleanliness < 1:
