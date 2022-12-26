@@ -32,12 +32,13 @@ class Creature:
         return self._name
 
     def status_update(self):
-        self.tiredness_update()
         self.hunger_update()
+        self.tiredness_update()
         self.cleanliness_update()
         self.fitness_update()
         self.toilet_update()
         self.old_age()
+        self.health_update()
 
     def age_up(self):
         self._age += 1
@@ -51,6 +52,13 @@ class Creature:
         if self._age == 10:
             self._alive = False
             print(f"{self._name} has died of old age! RIP.")
+    
+    def health_update(self):
+        if self._health == 0:
+            self._alive = False
+            print(f"{self._name} has died due to poor health! RIP.")
+        elif self._health <= 2:
+            print(f"{self._name}'s health is very low! Please take care of {self.him_her()}!")
 
     
     def is_alive(self):
@@ -92,7 +100,7 @@ class Creature:
     def cleanliness_message(self):
         if self._cleanliness < 1:
             self._health -= 1
-            print(f"{self._name} is filthy! Please give {self.he_she()} a bath soon or {self.him_her()} will lose health!")
+            print(f"{self._name} is filthy! Please give {self.him_her()} a bath soon or {self.he_she()} will lose health!")
         elif self._cleanliness < 4:
            print(f"{self._name} would like a bath!")
         

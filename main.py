@@ -9,48 +9,49 @@ def create():
     return pet
 
 def update(pet):
-    while True:
+    while pet.is_alive() == True:
         pet.status_update()
         time.sleep(1800)
+    print("Press Enter to play again.")
 
 
 def age_up(pet):
     while pet.is_alive() == True:
         pet.age_up()
-        time.sleep(0.1)
+        time.sleep(86400)
     print("Press Enter to play again.")
 
 
 def interact(pet):
-    options = {"status": f"check {pet.name2()}'s stats", "feed": f"give {pet.name2()} some food", "bath": f"give {pet.name2()} a bath", "exercise": f"exercise with {pet.name2()}", "sleep": f"put {pet.name2()} to bed", "wake": f"wake {pet.name2()} up", "quit": "Quit the programme"}
+    options = {"Status": f"Check {pet.name2()}'s stats", "Feed": f"Give {pet.name2()} some food", "Bath": f"Give {pet.name2()} a bath", "Exercise": f"Exercise with {pet.name2()}", "Sleep": f"Put {pet.name2()} to bed", "Wake": f"Wake {pet.name2()} up", "Quit": "Quit the programme"}
     for option in options:
         print(f"{option}: {options[option]}")
-    choice = input("What would you like to do? \n").lower()
+    choice = input("What would you like to do? \n").title()
     chosen(pet, choice, options)
 
 def chosen(pet, choice, options):
     if pet.is_alive() == False:
         sys.exit()
     if choice in options:
-        if choice == "status":
+        if choice == "Status":
             print(pet)
             interact(pet)
-        elif choice == "feed":
+        elif choice == "Feed":
             pet.feed()
             interact(pet)
-        elif choice == "bath":
+        elif choice == "Bath":
             pet.bath()
             interact(pet)
-        elif choice == "exercise":
+        elif choice == "Exercise":
             pet.exercise()
             interact(pet)
-        elif choice == "sleep":
+        elif choice == "Sleep":
             pet.sleep()
             interact(pet)
-        elif choice == "wake":
+        elif choice == "Wake":
             pet.wake()
             interact(pet)
-        elif choice == "quit":
+        elif choice == "Quit":
             print("Ok, Bye!")
     else:
         print("Invalid choice. PLease try again!")
@@ -61,15 +62,14 @@ def main():
 
     pet = create()
 
-    interaction = threading.Thread(target = interact, args = (pet,))
-    interaction.start()
-    
-    timer = threading.Thread(target = update, args = (pet,), daemon = True)
-    timer.start()
-
     aging = threading.Thread(target = age_up, args = (pet,), daemon = True)
     aging.start()
 
+    timer = threading.Thread(target = update, args = (pet,), daemon = True)
+    timer.start()
+
+    interaction = threading.Thread(target = interact, args = (pet,))
+    interaction.start()
 
 
 
