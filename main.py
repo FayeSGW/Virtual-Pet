@@ -1,6 +1,8 @@
 from creature2 import Creature
 import threading, pickle, time, sys
 
+
+
 def create():
     name = input("What would you like to call your pet? ")
     gender = input("Is your pet male (M), female (F), or other (O)? ")
@@ -10,15 +12,15 @@ def create():
 
 def update(pet):
     while pet.is_alive() == True:
-        pet.status_update()
         time.sleep(1800)
+        pet.status_update()
     print("Press Enter to play again.")
 
 
 def age_up(pet):
     while pet.is_alive() == True:
-        pet.age_up()
         time.sleep(86400)
+        pet.age_up()
     print("Press Enter to play again.")
 
 
@@ -53,14 +55,31 @@ def chosen(pet, choice, options):
             interact(pet)
         elif choice == "Quit":
             print("Ok, Bye!")
+            filename = f"{pet.name2()}.pickle"
+            with open(filename, "wb") as f:
+                pickle.dump(pet, f, pickle.HIGHEST_PROTOCOL)
     else:
         print("Invalid choice. PLease try again!")
         interact(pet)
 
+def loadgame():
+    load = input("Would you like to load an existing pet? Y/N ").lower()
+    if load == "y":
+        name = input("What is your pet's name? ")
+        filename = f"{name}.pickle"
+        try:
+            with open(filename, "rb") as f:
+                pet = pickle.load(f)
+        except FileNotFoundError:
+            print("Sorry, I couldn't find that pet!")
+            loadgame()
+    else:
+        pet = create()
+    return pet
 
 def main():
 
-    pet = create()
+    pet = loadgame()
 
     aging = threading.Thread(target = age_up, args = (pet,), daemon = True)
     aging.start()
