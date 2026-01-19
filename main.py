@@ -1,7 +1,6 @@
 from creature2 import Creature
 import threading, pickle, time, sys
 
-
 def create():
     name = input("What would you like to call your pet? ")
     gender = input("Is your pet male (M), female (F), or other (O)? ")
