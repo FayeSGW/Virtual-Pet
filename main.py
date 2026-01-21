@@ -8,6 +8,7 @@ def create():
     pet = Creature(name, gender)
     return pet
 
+
 def update(pet):
     while pet.is_alive() == True:
         time.sleep(1800)
