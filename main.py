@@ -30,6 +30,7 @@ def interact(pet):
     choice = input("What would you like to do? \n").title()
     chosen(pet, choice, options)
 
+
 def chosen(pet, choice, options):
     if pet.is_alive() == False:
         sys.exit()
